@@ -15,12 +15,16 @@ const getAllVoters = () => {
     return data;
   };
   
-  const updateOneVoter = () => {
-    return;
+  const updateOneVoter = (id,voter) => 
+  {
+    const data = Voter.updateVoter(id,voter)
+    return data;
   };
   
-  const deleteOneVoter = () => {
-    return;
+  const deleteOneVoter = (id) => 
+  {
+    const data = Voter.deleteOneVoter(id)
+    return data;
   };
   
   module.exports = {
