@@ -2,15 +2,23 @@ const voterService = require("../services/voterService")
 
 
 
-const getAllVoters = async (req, res) => {
+  const getAllVoters = async (req, res) =>
+  {
   const allVoters = await voterService.getAllVoters();
   res.send({ status: "OK", data: allVoters });
   };
   
-  const getOneVoter = async (req, res) => {
+  const getOneVoter = async (req, res) => 
+  {
     const voter = await voterService.getOneVoter(req.params.voterId)
     res.send({ status: "OK", data: voter });
   };
+
+  const getOneVoterByDNI = async (req,res) =>
+  {
+    const voter = await voterService.getOneVoterByDNI(req.params.voterDNI)
+    res.send({ status: "OK", data: voter });
+  }
   
   const createNewVoter = async (req, res) => 
   {
@@ -29,6 +37,15 @@ const getAllVoters = async (req, res) => {
     const createdVoter = await voterService.createNewVoter(newVoter)
     res.status(201).send({ status: createdVoter });
   };
+
+/*   const createNewVoters = async (req, res) => 
+  {
+    
+    const { body } = req;
+    const newVoters = JSON.parse(body.voters)
+    const createdVoters = await voterService.createNewVoters(newVoters)
+    res.status(201).send({ status: createdVoters });
+  }; */
   
   const updateOneVoter = async (req, res) =>
   {
@@ -60,4 +77,5 @@ const getAllVoters = async (req, res) => {
     createNewVoter,
     updateOneVoter,
     deleteOneVoter,
+    getOneVoterByDNI,
   };

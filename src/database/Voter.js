@@ -1,16 +1,26 @@
+const { json } = require('express');
 const DB = require('./db');
 
-const getAllVoters = async () => {
+const getAllVoters = async () => 
+{
     const data = await DB.query(`SELECT idvoter,name, lastName, email, dni, phone,isActive
     FROM voter`);
     return data
-  };
+}
 
-const getVoter = async (id) => {
+const getVoter = async (id) => 
+{
     const data = await DB.query(`SELECT name, lastName, email, dni, phone,isActive
     FROM voter WHERE idvoter = ${id}`);
     return data
-  };
+}
+
+const getVoterByDNI = async (dni) => 
+{
+    const data = await DB.query(`SELECT name, lastName, email, dni, phone,isActive
+    FROM voter WHERE dni = ${dni}`);
+    return data
+}
 
 const createVoter = async (voter) => 
 {
@@ -20,12 +30,30 @@ const createVoter = async (voter) =>
   );
 
   let message = 'Error in creating voter';
-  if (result.affectedRows) {
+  if (result.affectedRows) 
+  {
     message = 'Voter created successfully';
   }
 
   return message;
 }
+
+/* const createVoters = async (voters) =>
+{
+  
+  console.log(voters)
+  const sql = `INSERT INTO voter (name,lastName,email,dni,phone,isActive) VALUES ?`
+  const result = await DB.query(sql,[voters])
+  let message = 'Error in creating voters';
+
+  if (result.affectedRows) 
+  {
+    message = 'Number of voters created successfully ' + result.affectedRows;
+  }
+
+  return message
+
+} */
 
 const updateVoter = async (id,voter) => 
 {
@@ -51,4 +79,4 @@ const deleteOneVoter = async (id) =>
   return message
 }
 
-module.exports = { getAllVoters,getVoter,createVoter,updateVoter,deleteOneVoter}
+module.exports = { getAllVoters,getVoter,createVoter,updateVoter,deleteOneVoter,getVoterByDNI}
