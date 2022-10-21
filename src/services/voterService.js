@@ -1,4 +1,4 @@
-const Voter = require('../database/Voter');
+const Voter = require('../database/models/Voter');
 
 const getAllVoters = () => {
    const data = Voter.getAllVoters()
@@ -20,11 +20,11 @@ const getAllVoters = () => {
     return data;
   };
 
-/*   const createNewVoters = (newVoters) => {
+/*  const createNewVoters = (newVoters) => {
     const data = Voter.createVoters(newVoters)
     return data;
-  };
-   */
+  }; */
+
   const updateOneVoter = (id,voter) => 
   {
     const data = Voter.updateVoter(id,voter)

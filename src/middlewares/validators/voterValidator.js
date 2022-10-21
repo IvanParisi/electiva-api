@@ -8,15 +8,15 @@ function createValidationFor(route) {
       check("name")
       .isLength({ min: 3 ,max: 80})
       .withMessage("The name must have minimum length of 3 and max length of 80")
-      .isString()
-      .withMessage("The name only have letters")
+      .matches(/^[A-Za-z\s]+$/)
+      .withMessage('Name must be alphabetic.')
       .trim(),
 
       check("lastName")
       .isLength({ min: 3 ,max: 80})
       .withMessage("The last name must have minimum length of 3 and max length of 80")
-      .isString()
-      .withMessage("The last name only have letters")
+      .matches(/^[A-Za-z\s]+$/)
+      .withMessage('Name must be alphabetic.')
       .trim(),
 
       check("email")

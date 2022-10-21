@@ -38,14 +38,14 @@ const voterService = require("../services/voterService")
     res.status(201).send({ status: createdVoter });
   };
 
-/*   const createNewVoters = async (req, res) => 
+/*    const createNewVoters = async (req, res) => 
   {
     
-    const { body } = req;
-    const newVoters = JSON.parse(body.voters)
-    const createdVoters = await voterService.createNewVoters(newVoters)
+    //const { body } = req;
+    //const newVoters = JSON.parse(body.voters)
+    const createdVoters = await voterService.createNewVoters(req)
     res.status(201).send({ status: createdVoters });
-  }; */
+  };  */
   
   const updateOneVoter = async (req, res) =>
   {

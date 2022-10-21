@@ -23,11 +23,14 @@ app.use(morgan('dev'))
 app.use(helmet());
 app.use(cors())
 app.use(limiter);
+
+
 app.use(express.json())
+app.use(express.urlencoded({extended: true}));
 
 // End-Points
 app.use("/api/v1/voters", v1VoterRouter);
-app.use("/api/v1/campaing", v1CampaingRouter);
+app.use("/api/v1/campaign", v1CampaingRouter);
 
 app.listen(PORT, () => 
 { 

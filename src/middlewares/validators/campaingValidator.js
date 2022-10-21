@@ -8,6 +8,8 @@ function createValidationFor(route)
       check("name")
       .isLength({min: 10,max: 45})
       .withMessage("The name must have minimum length of 10 and max length of 45")
+      .matches(/^[A-Za-z\s]+$/)
+      .withMessage('Name must be alphabetic.')
       .trim(),
 
       check("description")
@@ -25,6 +27,14 @@ function createValidationFor(route)
       check("numberOfVoters")
       .isInt({ min: 1 })
       .withMessage("Number of Voters invalid")
+      ]
+    case 'createPosition':
+      return[
+        check("name")
+        .isLength({min: 5,max:45})
+        .withMessage("The name must have minimum length of 5 and max length of 45")
+        .matches(/^[A-Za-z\s]+$/)
+        .withMessage('Name must be alphabetic.')
       ]
       default:
         return[]

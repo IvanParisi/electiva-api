@@ -1,5 +1,4 @@
-const { json } = require('express');
-const DB = require('./db');
+const DB = require('../db');
 
 const getAllVoters = async () => 
 {
@@ -38,12 +37,12 @@ const createVoter = async (voter) =>
   return message;
 }
 
-/* const createVoters = async (voters) =>
+/*  const createVoters = async (voters) =>
 {
   
   console.log(voters)
-  const sql = `INSERT INTO voter (name,lastName,email,dni,phone,isActive) VALUES ?`
-  const result = await DB.query(sql,[voters])
+  const votantes = [["Ivan","Parisi","ivanparisi@outlook.es","12345678","1168489542"]]
+  const result = await DB.query(`INSERT INTO voter (name,lastName,email,dni,phone) VALUES (?,?,?,?,?) `,[votantes])
   let message = 'Error in creating voters';
 
   if (result.affectedRows) 
@@ -53,7 +52,7 @@ const createVoter = async (voter) =>
 
   return message
 
-} */
+}  */
 
 const updateVoter = async (id,voter) => 
 {

@@ -1,4 +1,4 @@
-const DB = require('./db');
+const DB = require('../db');
 
 const getAllCampaigns = async () => 
 {
