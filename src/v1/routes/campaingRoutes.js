@@ -1,6 +1,6 @@
 const express = require("express");
 const campaignController = require("../../controllers/campaignController")
-
+const upload = require("../../utils/multer");
 
 
 const {createValidationFor,checkValidationResult} = require('../../middlewares/validators/campaingValidator');
@@ -20,8 +20,9 @@ router.get("/positions/:campaignId",campaignController.getPositionsForCampaing)
 router.post("/positions",createValidationFor("createPosition"),checkValidationResult,campaignController.createNewPosition)
 router.delete("/positions/:positionId",campaignController.deleteOnePosition)
 
-/* /P/ de Candidatos */
+/* G/P/ de Candidatos */
 
- router.post("/candidate",campaignController.createNewCandidate) 
+router.get("/candidate/:campaignId/:positionId",campaignController.getCandidateByCampaingANDPosition)
+router.post("/candidate", upload.single("image"),campaignController.createNewCandidate)
 
 module.exports = router;

@@ -17,6 +17,12 @@ const getAllCampaigns = () => {
     const data = Position.getPositionsForCampaing(id)
     return data
   }
+
+  const getCandidateByCampaingANDPosition = (cID,pID) =>
+  {
+    const data = Candidate.getCandidateByCampaingANDPosition(cID,pID)
+    return data
+  }
   const createNewCampaign = (newCampaign) => 
   {
     const data = Campaign.createCampaign(newCampaign)
@@ -58,6 +64,7 @@ const getAllCampaigns = () => {
     getAllCampaigns,
     getOneCampaign,
     getPositionsForCampaing,
+    getCandidateByCampaingANDPosition,
     createNewCampaign,
     createNewPosition,
     createNewCandidate,

@@ -1,6 +1,6 @@
 const campaignService = require("../services/campaingService")
-const cloudinary = require("../utils/cloudinary");
-const upload = require("../utils/multer");
+const cloudinary = require("../utils/cloudinary")
+const candidate = require("../database/models/Candidate");
 
   const getAllCampaigns = async (req, res) => 
   {
@@ -18,6 +18,14 @@ const upload = require("../utils/multer");
   {
     const positions = await campaignService.getPositionsForCampaing(req.params.campaignId)
     res.send({status : "OK",data : positions})
+  }
+
+  const getCandidateByCampaingANDPosition = async (req,res) =>
+  {
+    let cID = req.params.campaignId
+    let pID = req.params.positionId
+    const candidates = await campaignService.getCandidateByCampaingANDPosition(cID,pID)
+    res.send({status: "OK", data: candidates})
   }
   const createNewCampaign = async (req, res) => 
   {
@@ -45,16 +53,19 @@ const upload = require("../utils/multer");
 
   const createNewCandidate = async (req,res) =>
   {
-    const {body} = req
-    const result = await cloudinary.uploader.upload(req.file.path)
-    let candidate = 
+    try {
+      const result = await cloudinary.uploader.upload(req.file.path);
+      let newCandidate = {
+        name: req.body.name,
+        description: req.body.description ,
+        image: result.secure_url,
+      };
+      const createdCandidate = await candidate.createCandidate(newCandidate)
+      res.status(201).send({status: createdCandidate});
+    } catch (err) 
     {
-      name: body.name,
-      description: body.description,  
-      image: result.secure_url
+      console.log(err);
     }
-    const createdCandidate = await campaignService.createNewCandidate(candidate)
-    res.status(201).send({ status: createdCandidate });
   }
 
   const updateOneCampaign = async (req, res) =>
@@ -90,6 +101,7 @@ const upload = require("../utils/multer");
     getAllCampaigns,
     getOneCampaign,
     getPositionsForCampaing,
+    getCandidateByCampaingANDPosition,
     createNewCampaign,
     createNewPosition,
     createNewCandidate,
