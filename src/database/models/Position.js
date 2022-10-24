@@ -1,6 +1,12 @@
 const DB = require('../db');
 
 
+const getPosition = async (id) =>
+{
+  const data = await DB.query(`SELECT name FROM position WHERE idposition = ${id} `)
+  return data
+}
+
  const getPositionsForCampaing = async(idCampaing) =>
 {
     const data = await DB.query(`SELECT name FROM position P 
@@ -35,4 +41,4 @@ const deleteOnePosition = async (idPosition) =>
     return message
 }
 
-module.exports = {createPosition,deleteOnePosition,getPositionsForCampaing}
+module.exports = {getPosition,createPosition,deleteOnePosition,getPositionsForCampaing}

@@ -61,7 +61,7 @@ const updateVoter = async (id,voter) =>
   dni="${voter.dni}", phone="${voter.phone}", isActive=${voter.isActive}
   WHERE idvoter=${id}`)
 
-  let message = 'Error in updated voter';
+  let message = 'Error in update voter';
   if (result.affectedRows) 
   {
     message = 'Voter updated successfully';

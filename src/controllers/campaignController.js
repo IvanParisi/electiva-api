@@ -13,6 +13,18 @@ const candidate = require("../database/models/Candidate");
     const campaign = await campaignService.getOneCampaign(req.params.campaignId)
     res.send({ status: "OK", data: campaign });
   };
+
+  const getOneCandidate = async  (req,res) =>
+  {
+    const candidate = await campaignService.getOneCandidate(req.params.candidateId)
+    res.send({ status: "OK", data: candidate });
+  }
+
+  const getOnePosition = async (req,res) =>
+  {
+    const position = await campaignService.getOnePosition(req.params.positionId)
+    res.send({status: "OK", data : position})
+  }
   
   const getPositionsForCampaing = async (req,res) =>
   {
@@ -59,8 +71,29 @@ const candidate = require("../database/models/Candidate");
         name: req.body.name,
         description: req.body.description ,
         image: result.secure_url,
+        idcloudinary: result.public_id
       };
       const createdCandidate = await candidate.createCandidate(newCandidate)
+      res.status(201).send({status: createdCandidate});
+    } catch (err) 
+    {
+      console.log(err);
+    }
+  }
+
+  const updateOneCandidate = async (req,res) =>
+  {
+    try {
+      const candidateU = await candidate.getCandidate(req.params.candidateId)
+      await cloudinary.uploader.destroy(candidateU[0].idcloudinary);
+      const result = await cloudinary.uploader.upload(req.file.path);
+      const data = {
+        name: req.body.name || candidateU.name,
+        description: req.body.description || candidateU.description,
+        image: result.secure_url  || candidateU.image,
+        idcloudinary: result.public_id || candidateU.idcloudinary
+      };
+      const createdCandidate = await candidate.updateCandidate(req.params.candidateId,data,{new: true})
       res.status(201).send({status: createdCandidate});
     } catch (err) 
     {
@@ -97,16 +130,26 @@ const candidate = require("../database/models/Candidate");
     res.status(201).send({ status: deletedPosition });
   }
   
+  const deleteOneCandidate = async (req,res) =>
+  {
+    const deletedCandidate = await campaignService.deleteOneCandidate(req.params.candidateId)
+    res.status(201).send({ status: deletedCandidate });
+  }
+
   module.exports = {
     getAllCampaigns,
     getOneCampaign,
+    getOnePosition,
+    getOneCandidate,
     getPositionsForCampaing,
     getCandidateByCampaingANDPosition,
     createNewCampaign,
     createNewPosition,
     createNewCandidate,
     updateOneCampaign,
+    updateOneCandidate,
     deleteOneCampaign,
     deleteOnePosition,
+    deleteOneCandidate,
     
   };

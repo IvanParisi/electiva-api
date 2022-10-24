@@ -16,13 +16,17 @@ router.put("/:campaignId", createValidationFor("createCampaing"), checkValidatio
 router.delete("/:campaignId", campaignController.deleteOneCampaign);
 
 /* G/P/D de Posiciones */
+router.get("/positions/one/:positionId",campaignController.getOnePosition)
 router.get("/positions/:campaignId",campaignController.getPositionsForCampaing)
 router.post("/positions",createValidationFor("createPosition"),checkValidationResult,campaignController.createNewPosition)
 router.delete("/positions/:positionId",campaignController.deleteOnePosition)
 
-/* G/P/ de Candidatos */
+/* G/P/U/D de Candidatos */
 
+router.get("/candidate/:candidateId", campaignController.getOneCandidate)
 router.get("/candidate/:campaignId/:positionId",campaignController.getCandidateByCampaingANDPosition)
 router.post("/candidate", upload.single("image"),campaignController.createNewCandidate)
+router.put("/candidate/:candidateId",upload.single("image"), campaignController.updateOneCandidate)
+router.delete("/candidate/:candidateId",  campaignController.deleteOneCandidate)
 
 module.exports = router;

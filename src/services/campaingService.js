@@ -11,6 +11,18 @@ const getAllCampaigns = () => {
     const data = Campaign.getCampaign(id)
     return data;
   };
+
+  const getOneCandidate = (id) =>
+  {
+    const data = Candidate.getCandidate(id)
+    return data
+  }
+
+  const getOnePosition = (id) =>
+  {
+    const data = Position.getPosition(id)
+    return data
+  }
   
   const getPositionsForCampaing = (id) =>
   {
@@ -41,6 +53,11 @@ const getAllCampaigns = () => {
     return data
   }
 
+  const updateOneCandidate = (id,candidate) => 
+  {
+    const data = Candidate.updateOneCandidate(id,candidate)
+    return data
+  }
 
   const updateOneCampaign = (id,campaign) => 
   {
@@ -59,16 +76,26 @@ const getAllCampaigns = () => {
     const data = Position.deleteOnePosition(id)
     return data
   }
+
+  const deleteOneCandidate = (id) =>
+  {
+    const data = Candidate.deleteOneCandidate(id)
+    return data
+  }
   
   module.exports = {
     getAllCampaigns,
     getOneCampaign,
+    getOnePosition,
+    getOneCandidate,
     getPositionsForCampaing,
     getCandidateByCampaingANDPosition,
     createNewCampaign,
     createNewPosition,
     createNewCandidate,
     updateOneCampaign,
+    updateOneCandidate,
     deleteOneCampaign,
     deleteOnePosition,
+    deleteOneCandidate,
   };
