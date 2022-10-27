@@ -1,6 +1,6 @@
-const campaignService = require("../services/campaingService")
+const campaignService = require("../services/campaignService")
 const cloudinary = require("../utils/cloudinary")
-const candidate = require("../database/models/Candidate");
+
 
   const getAllCampaigns = async (req, res) => 
   {
@@ -46,11 +46,7 @@ const candidate = require("../database/models/Candidate");
     const newCampaign = 
     {
     name: body.name,
-    description: body.description,
-    startDate: body.startDate,
-    endDate: body.endDate,
-    autoStart: body.autoStart,
-    numberOfVoters: body.numberOfVoters
+    description: body.description
     };
 
     const createdCampaign = await campaignService.createNewCampaign(newCampaign)
@@ -67,14 +63,19 @@ const candidate = require("../database/models/Candidate");
   {
     try {
       const result = await cloudinary.uploader.upload(req.file.path);
+      let idP = req.params.positionId
+      let idCM = req.params.campaignId
       let newCandidate = {
         name: req.body.name,
         description: req.body.description ,
         image: result.secure_url,
         idcloudinary: result.public_id
       };
-      const createdCandidate = await candidate.createCandidate(newCandidate)
-      res.status(201).send({status: createdCandidate});
+      const createdCandidate = await campaignService.createNewCandidate(newCandidate)
+      let idCA = createdCandidate.id
+      console.log(idCA,idP,idCM)
+      const createdCandidature = await campaignService.createNewCandidature(idCA,idP,idCM)
+      res.status(201).send({status: createdCandidate.message + " " + createdCandidature});
     } catch (err) 
     {
       console.log(err);
@@ -84,7 +85,7 @@ const candidate = require("../database/models/Candidate");
   const updateOneCandidate = async (req,res) =>
   {
     try {
-      const candidateU = await candidate.getCandidate(req.params.candidateId)
+      const candidateU = await campaignService.getOneCandidate(req.params.candidateId)
       await cloudinary.uploader.destroy(candidateU[0].idcloudinary);
       const result = await cloudinary.uploader.upload(req.file.path);
       const data = {
@@ -93,8 +94,8 @@ const candidate = require("../database/models/Candidate");
         image: result.secure_url  || candidateU.image,
         idcloudinary: result.public_id || candidateU.idcloudinary
       };
-      const createdCandidate = await candidate.updateCandidate(req.params.candidateId,data,{new: true})
-      res.status(201).send({status: createdCandidate});
+      const updatedCandidate = await campaignService.updateOneCandidate(req.params.candidateId,data,{new: true})
+      res.status(201).send({status: updatedCandidate});
     } catch (err) 
     {
       console.log(err);

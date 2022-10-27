@@ -24,14 +24,14 @@ const createCandidate = async (candidate) =>
         `INSERT INTO candidate(name,description,image,idcloudinary)
         VALUES ("${candidate.name}", "${candidate.description}", "${candidate.image}","${candidate.idcloudinary}")`
       );
-
+  let id = result.insertId
   let message = 'Error in creating candidate';
   if (result.affectedRows) 
   {
     message = 'Candidate created successfully';
   }
 
-  return message;
+  return {message,id};
 } 
 
 const updateCandidate = async (id,candidate) =>

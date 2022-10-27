@@ -3,7 +3,7 @@ const campaignController = require("../../controllers/campaignController")
 const upload = require("../../utils/multer");
 
 
-const {createValidationFor,checkValidationResult} = require('../../middlewares/validators/campaingValidator');
+const {createValidationFor,checkValidationResult} = require('../../middlewares/validators/campaignValidator');
 
 const router = express.Router();
 
@@ -11,8 +11,8 @@ const router = express.Router();
 
 router.get("/", campaignController.getAllCampaigns);
 router.get("/:campaignId", campaignController.getOneCampaign);
-router.post("/", createValidationFor("createCampaing"), checkValidationResult , campaignController.createNewCampaign);
-router.put("/:campaignId", createValidationFor("createCampaing"), checkValidationResult ,campaignController.updateOneCampaign);
+router.post("/", createValidationFor("createDraftCampaing"), checkValidationResult , campaignController.createNewCampaign);
+router.patch("/:campaignId", createValidationFor("updateCampaign"), checkValidationResult ,campaignController.updateOneCampaign);
 router.delete("/:campaignId", campaignController.deleteOneCampaign);
 
 /* G/P/D de Posiciones */
@@ -25,7 +25,8 @@ router.delete("/positions/:positionId",campaignController.deleteOnePosition)
 
 router.get("/candidate/:candidateId", campaignController.getOneCandidate)
 router.get("/candidate/:campaignId/:positionId",campaignController.getCandidateByCampaingANDPosition)
-router.post("/candidate", upload.single("image"),campaignController.createNewCandidate)
+router.post("/candidate/:campaignId/:positionId", [upload.single("image"),createValidationFor("createCandidate"),checkValidationResult]
+,campaignController.createNewCandidate)
 router.put("/candidate/:candidateId",upload.single("image"), campaignController.updateOneCandidate)
 router.delete("/candidate/:candidateId",  campaignController.deleteOneCandidate)
 

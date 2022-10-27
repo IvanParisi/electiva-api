@@ -7,7 +7,7 @@ const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 
 const v1VoterRouter = require("./v1/routes/voterRoutes");
-const v1CampaingRouter = require("./v1/routes/campaingRoutes");
+const v1CampaingRouter = require("./v1/routes/campaignRoutes");
 
 const app = express(); 
 const PORT = process.env.PORT; 

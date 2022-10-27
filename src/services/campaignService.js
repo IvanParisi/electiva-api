@@ -1,6 +1,7 @@
-const Campaign = require('../database/models/Campaign');
+const Campaign = require('../database/models/Campaign')
 const Position = require('../database/models/Position')
 const Candidate = require('../database/models/Candidate')
+const Candidature = require('../database/models/Candidatures')
 
 const getAllCampaigns = () => {
    const data = Campaign.getAllCampaigns()
@@ -53,9 +54,15 @@ const getAllCampaigns = () => {
     return data
   }
 
+  const createNewCandidature = (idCA,idP,idCM) =>
+  {
+    const data = Candidature.createCandidature(idCA,idP,idCM)
+    return data
+  }
+
   const updateOneCandidate = (id,candidate) => 
   {
-    const data = Candidate.updateOneCandidate(id,candidate)
+    const data = Candidate.updateCandidate(id,candidate)
     return data
   }
 
@@ -93,6 +100,7 @@ const getAllCampaigns = () => {
     createNewCampaign,
     createNewPosition,
     createNewCandidate,
+    createNewCandidature,
     updateOneCampaign,
     updateOneCandidate,
     deleteOneCampaign,

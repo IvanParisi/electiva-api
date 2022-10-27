@@ -3,7 +3,7 @@ const { check, validationResult } = require('express-validator');
 function createValidationFor(route) 
 {
   switch (route) {
-    case 'createCampaing':
+    case 'createDraftCampaing':
       return[
       check("name")
       .isLength({min: 10,max: 45})
@@ -16,6 +16,8 @@ function createValidationFor(route)
       .isLength({max: 250})
       .withMessage("The name must have max length of 250"),
 
+      ]
+      case 'updateCampaign':[
       check("startDate")
       .isISO8601({strict: true})
       .withMessage("Invalid date"),
@@ -36,6 +38,18 @@ function createValidationFor(route)
         .matches(/^[A-Za-z\s]+$/)
         .withMessage('Name must be alphabetic.')
       ]
+
+      case 'createCandidate':
+        return[
+          check("name")
+        .isLength({min: 5,max:45})
+        .withMessage("The name must have minimum length of 5 and max length of 45")
+        .matches(/^[A-Za-z\s]+$/)
+        .withMessage('Name must be alphabetic.'),
+        check("description")
+        .isLength({min: 5,max:45})
+        .withMessage("The name must have minimum length of 5 and max length of 45")
+        ]
       default:
         return[]
   }
