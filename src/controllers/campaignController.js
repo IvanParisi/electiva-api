@@ -50,13 +50,13 @@ const cloudinary = require("../utils/cloudinary")
     };
 
     const createdCampaign = await campaignService.createNewCampaign(newCampaign)
-    res.status(201).send({ status: createdCampaign });
+    res.status(201).send({ status: createdCampaign.message , id: createdCampaign.id});
   };
 
   const createNewPosition = async (req,res) =>
   {
     const createdPosition = await campaignService.createNewPosition(req.body.name)
-    res.status(201).send({ status: createdPosition });
+    res.status(201).send({ status: createdPosition.message, id: createdPosition.id });
   }  
 
   const createNewCandidate = async (req,res) =>
@@ -73,9 +73,8 @@ const cloudinary = require("../utils/cloudinary")
       };
       const createdCandidate = await campaignService.createNewCandidate(newCandidate)
       let idCA = createdCandidate.id
-      console.log(idCA,idP,idCM)
       const createdCandidature = await campaignService.createNewCandidature(idCA,idP,idCM)
-      res.status(201).send({status: createdCandidate.message + " " + createdCandidature});
+      res.status(201).send({status: createdCandidate.message + " and " + createdCandidature.message, id: createdCandidature.id});
     } catch (err) 
     {
       console.log(err);

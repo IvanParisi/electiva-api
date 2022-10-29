@@ -21,13 +21,14 @@ const createCampaign = async (campaing) =>
     const result = await DB.query(`INSERT INTO campaign(name,description,state)
     VALUES ("${campaing.name}", "${campaing.description}","draft")`)   
 
+    let id = result.insertId
     let message = 'Error in creating campaign';
     if (result.affectedRows) 
     {
     message = 'Campaign created successfully with the id : ' + `${result.insertId}`;
     }
 
-   return message;
+   return {message,id}
 
 }
 

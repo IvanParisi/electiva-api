@@ -37,7 +37,7 @@ function createValidationFor(route) {
       .withMessage("The phone must be a int"),
 
       check("isActive")
-      .isInt({ min: 0, max: 0 })
+      .isInt({ min: 0, max: 1 })
       .withMessage("isActive must be 1 or 0")]
 
       default:

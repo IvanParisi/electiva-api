@@ -28,13 +28,14 @@ const createVoter = async (voter) =>
     VALUES ("${voter.name}", "${voter.lastName}", "${voter.email}", "${voter.dni}", "${voter.phone}",${voter.isActive})`
   );
 
+  let id = result.insertId
   let message = 'Error in creating voter';
   if (result.affectedRows) 
   {
     message = 'Voter created successfully';
   }
 
-  return message;
+  return {message,id}
 }
 
 /*  const createVoters = async (voters) =>

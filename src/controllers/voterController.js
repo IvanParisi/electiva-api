@@ -35,7 +35,7 @@ const voterService = require("../services/voterService")
     isActive: body.isActive
     };
     const createdVoter = await voterService.createNewVoter(newVoter)
-    res.status(201).send({ status: createdVoter });
+    res.status(201).send({ status: createdVoter.message,id: createdVoter.id });
   };
 
 /*    const createNewVoters = async (req, res) => 

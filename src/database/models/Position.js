@@ -24,13 +24,14 @@ const createPosition = async (position) =>
     VALUES ("${position}")`
   );
 
+  let id = result.insertId
   let message = 'Error in creating position';
   if (result.affectedRows) 
   {
     message = 'Position created successfully';
   }
 
-  return message;
+  return {message,id}
 }
 
 const deleteOnePosition = async (idPosition) =>
